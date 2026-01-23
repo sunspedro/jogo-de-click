@@ -1,0 +1,223 @@
+:root {
+  --red-100: #4D0000;
+  --red-200: #7A0000;
+  --red-300: #A30000;
+  --red-400: #C80000;
+  --red-500: #E10600;
+  --red-600: #FF1E1E;
+  --red-700: #FF3B3B;
+  --red-800: #FF6F6F;
+  --red-900: #FF9A9A;
+  --red-1000: #FFD6D6;
+
+  --black-100: #120000;
+  --black-200: #2A0000;
+  --white-300: #5A3A3A;
+  --white-200: #B5A0A0;
+  --white-100: #F5EDED;
+}
+
+#estiloGeral{
+  height: 50vw;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pontos{
+  background-color: #fff;
+  margin-right: 100px;
+}
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+  background-color: #fff;
+}
+.card h2{
+  font-size: 40px;
+  font-weight: 700;
+}
+.card p{
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.principal{
+  .btn-principal{
+    background-color: #fff;
+    padding: 40px;
+  }
+  i{
+    display: none;
+  }
+
+}
+.btn-principal:hover{
+  background-color: #fff;
+}
+
+.lateral{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  margin-left: 100px;
+  width: 400px;
+  height: 400px;
+  .btn{
+    font-size: 22px;
+    background-color: #000;
+    margin: 5px;
+    padding: 20px;
+    color: #fff;
+  }
+  .btn#habilitaHabilidades{
+    display: none;
+  }
+}
+#overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+#modal{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  padding: 100px;
+  background-color: #ffffff;
+}
+
+/* estilo1  */
+.estilo1{
+  font-family: "Roboto", sans-serif;
+  .card{
+    border-radius: 10px;
+    background-color: var(--white-100);
+  }
+  .pontos{
+    .valor{
+      color: var(--red-300);
+    }
+  }
+  .principal{
+    .btn-principal{
+      background-color: var(--white-100);
+    }
+    .btn-principal:hover{
+      background-color: var(--white-200);
+    }
+  }
+  .lateral{
+    .btn{
+      border-radius: 5px;
+      background-color: var(--red-200);
+      border: none;
+    }
+  }
+}
+#overlay.estilo1{
+  background-color: rgba(0, 0, 0, 0.5);
+  #modal{
+    background-color: var(--white-100);
+    border-radius: 15px;
+  }
+}
+
+/* estilo2 */
+.estilo2{
+  .principal{
+    color: var(--white-100);
+    background-color: var(--red-200);
+    .btn-principal{
+      border: 1px solid var(--red-500);
+      border-radius: 10px;
+      transition: all 1s ease;
+    }
+    .btn-principal:hover{
+      background-color: var(--red-500);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+      i{
+        color: var(--red-1000);
+      }
+    }
+    i{
+      display: block;
+      transition: all 1s ease;
+    }
+  }
+  .lateral{
+    .btn{
+      color: var(--white-100);
+      transition: all 1s ease;
+    }
+    .btn:hover{
+      background-color: var(--red-100);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+.estilo2 #modal{
+  background-color: var(--white-100);
+  border-radius: 15px;
+  .btn{
+    border: none;
+    color: var(--white-100);
+    font-weight: 700;
+    font-size: 16px;
+    background-color: var(--red-500);
+    border-radius: 10px;
+    padding: 20px;
+    transition: all 1s ease;
+  }
+  .btn:hover{
+    background-color: var(--red-400);
+    transform: translateY(-10px);
+  }
+}
+
+/* estilo3 */
+.estilo3{
+  .card{
+    transition: filter 2s ease;
+  }
+  .card:hover{
+    filter: brightness(0.9);
+  }
+}
+
+#arvoreHabilidades{
+  /* display: none; */
+  display: flex;
+  background-color: #A30000;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.listaHabilidades{
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  .listaCategorias{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .item{
+      padding: 50px;
+      margin: 40px;
+      background-color: #000;
+    }
+  }
+}

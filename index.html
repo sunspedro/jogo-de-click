@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Document</title>
+</head>
+<body>
+  <div id="estiloGeral">
+    <div class="card pontos">
+      <h2>Pontuação: </h2>
+      <p id="pontos" class="valor"></p>
+    </div>
+    <div class="card principal">
+      <h2>Click game</h2>
+      <button class="btn-principal" id="onClick">
+        <i class="fa-regular fa-hand-pointer fa-2xl" ></i>
+      </button>
+    </div>
+    <div class="card lateral">
+      <h2>Melhorias</h2>
+      <button class="btn" id="habilitaHabilidades"></button>
+      <button class="btn" id="melhoraValor"></button>
+      <button class="btn" id="melhoraEstilo"></button>
+    </div>
+  </div>
+
+  <div id="arvoreHabilidades">
+    <h2>Arvore de habilidades</h2>
+    <div class="listaHabilidades">
+      <h2>Titulo</h2>
+      <div class="listaCategorias">
+        <div class="item">
+          <p>item um</p>
+        </div>
+        <div class="item">
+          <p>item dois</p>
+        </div>
+        <div class="item">
+          <p>item tres</p>
+        </div>
+      </div>
+      <h2>Titulo</h2>
+      <div class="listaCategorias">
+        <div class="item">
+          <p>item um</p>
+        </div>
+        <div class="item">
+          <p>item dois</p>
+        </div>
+        <div class="item">
+          <p>item tres</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div id="overlay">
+    <div id="modal">
+      <h2>Pontos insuficientes</h2>
+      <button class="btn" id="fechaModal">Fechar</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
