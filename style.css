@@ -100,6 +100,9 @@
 /* estilo1  */
 .estilo1{
   font-family: "Roboto", sans-serif;
+  button{
+    cursor: pointer;
+  }
   .card{
     border-radius: 10px;
     background-color: var(--white-100);
@@ -192,6 +195,34 @@
   }
   .card:hover{
     filter: brightness(0.9);
+  }
+  /* .pontos{
+    width: 400px;
+    height: 325px;
+  }
+  .lista-pontos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--red-400);
+    border-radius: 10px;
+    min-width: 90%;
+    margin: 10px;
+    transition: transform 1s ease ;
+    .pontos-title{
+      color: #B5A0A0;
+      margin: 15px 0px 35px 0px;
+    }
+    .valor{
+      color: var(--white-100);
+      margin: 0px 0px 15px 0px;
+    }
+  }
+  .pontos2{
+    background-color: var(--red-100);
+  } */
+  .lista-pontos:hover{
+    transform: scale(1.05);
   }
 }
 

@@ -5,7 +5,7 @@ const game = {
   precoMelhoraEstilo: 200,
   precoHabilidade: 1000,
   classeEstilo: 0,
-  maxEstilo: 3
+  estiloMaximo: 3,
 }
 
 const ui = {
@@ -64,10 +64,11 @@ function clickMelhoraEstilo() {
 
     game.classeEstilo++
 
-    if (game.classeEstilo < game.maxEstilo) {
+    if (game.classeEstilo <= game.estiloMaximo) {
       ui.estiloGeral.classList.add("estilo" + game.classeEstilo)
       ui.overlay.classList.add("estilo" + game.classeEstilo)
-    } else {
+    }
+    if(game.classeEstilo >= game.estiloMaximo){
       ui.melhoraEstilo.textContent = "Estilo máximo alcançado."
       ui.melhoraEstilo.removeEventListener("click", clickMelhoraEstilo)
       ui.botaoHabilidade.style.display = "block"
