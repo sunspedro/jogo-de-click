@@ -196,8 +196,9 @@ function clickCritico(){
     ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
   }
 }
+
 function clickCriticoSorteador(){
-  if(game.clickCriticoChance < Math.random()){
+  if(game.clickCriticoChance > Math.random()){
     console.log("deu certo")
   }
 }

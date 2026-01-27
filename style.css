@@ -25,7 +25,7 @@
   align-items: center;
 }
 .pontos{
-  background-color: #fff;
+  background-color: var(--white-100);
   margin-right: 100px;
 }
 .pontos2{
@@ -34,18 +34,19 @@
 .btn-secundario{
   display: none;
   border: none;
-  color: var(--white-100);
+  color: var(--red-100);
+  border: 1px solid var(--red-100);
   font-weight: 700;
   font-size: 16px;
-  background-color: var(--red-500);
+  background-color: var(--white-100);
   border-radius: 10px;
   padding: 40px;
   transition: all 1s ease;
   margin-top: 50px;
 }
 .btn-secundario:hover{
-  background-color: var(--white-100);
-  color: var(--black-100);
+  background-color: var(--red-100);
+  color: var(--white-100);
 
 }
 .card{
@@ -54,7 +55,7 @@
   align-items: center;
   width: 400px;
   height: 400px;
-  background-color: #fff;
+  background-color: var(--white-100);
 }
 .card h2{
   font-size: 40px;
@@ -67,7 +68,7 @@
 
 .principal{
   .btn-principal{
-    background-color: #fff;
+    background-color: var(--white-100);
     padding: 40px;
   }
   i{
@@ -75,15 +76,12 @@
   }
 
 }
-.btn-principal:hover{
-  background-color: #fff;
-}
 
 .lateral{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--white-100);
   margin-left: 100px;
   width: 400px;
   height: 400px;
@@ -92,7 +90,7 @@
     background-color: #000;
     margin: 5px;
     padding: 20px;
-    color: #fff;
+    color: var(--white-100);
   }
   .btn#habilitaHabilidades{
     display: none;
@@ -114,7 +112,7 @@
   display: flex;
   flex-direction: column;
   padding: 100px;
-  background-color: #ffffff;
+  background-color: var(--white-100)fff;
 }
 
 /* estilo1  */
@@ -162,16 +160,15 @@
     color: var(--white-100);
     background-color: var(--red-200);
     .btn-principal{
+      color: var(--red-500);
       border: 1px solid var(--red-500);
       border-radius: 10px;
       transition: all 1s ease;
     }
     .btn-principal:hover{
       background-color: var(--red-500);
+      color: var(--white-100);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-      i{
-        color: var(--red-1000);
-      }
     }
     i{
       display: block;
@@ -258,7 +255,7 @@
 .listaHabilidades{
   display: flex;
   flex-direction: column;
-  color: #fff;
+  color: var(--white-100);
   align-items: center;
   justify-content: center;
   .listaCategorias{
