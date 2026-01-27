@@ -73,6 +73,7 @@
   }
   i{
     display: none;
+    color: var(--red-500);
   }
 
 }
@@ -134,9 +135,6 @@
     .btn-principal{
       background-color: var(--white-100);
     }
-    .btn-principal:hover{
-      background-color: var(--white-200);
-    }
   }
   .lateral{
     .btn{
@@ -172,7 +170,6 @@
     }
     i{
       display: block;
-      transition: all 1s ease;
     }
   }
   .lateral{
