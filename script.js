@@ -13,6 +13,10 @@ const game = {
   clickAutomaticoNivelMaximo: 20,
   clickAutomaticoTempo: 10000,
   clickAutomaticoHabilitado: false,
+  clickCriticoNivelAtual: 0,
+  clickCriticoNivelMaximo: 20,
+  clickCriticoValor: 2000,
+  clickCriticoChance: 0.02,
 }
 
 const ui = {
@@ -35,8 +39,8 @@ const ui = {
   clickCriticoBotao: document.getElementById("clickCriticoBotao"),
 }
 
-let intervaloClickPrimario = null;
-let intervaloClickSecundario = null;
+let intervaloClickPrimario = null
+let intervaloClickSecundario = null
 
 function atualizaPontosPrimario() {
   ui.pontosPrimario.textContent = game.pontosPrimario
@@ -68,11 +72,13 @@ function atualizaValorPrimario(){
 
 ui.btnClickPrimario.addEventListener("click", () => {
   atualizaValorPrimario()
+  clickCriticoSorteador()
 })
 
 ui.btnClickSecundario.addEventListener("click", () => {
   game.pontosSecundario += game.valorClickSecundario
   atualizaPontosSecundario()
+  clickCriticoSorteador()
 })
 
 ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
@@ -127,23 +133,23 @@ function clickHabilidades() {
 ui.botaoHabilidade.addEventListener("click", clickHabilidades)
 
 function iniciarClickAutomaticoPrimario() {
-  if (intervaloClickPrimario) return;
+  if (intervaloClickPrimario) return
 
   intervaloClickPrimario = setInterval(() => {
-    atualizaValorPrimario();
-  }, game.clickAutomaticoTempo);
+    atualizaValorPrimario()
+  }, game.clickAutomaticoTempo)
 }
 
 function pararClickAutomaticoPrimario() {
-  if (!intervaloClickPrimario) return;
+  if (!intervaloClickPrimario) return
 
-  clearInterval(intervaloClickPrimario);
-  intervaloClickPrimario = null;
+  clearInterval(intervaloClickPrimario)
+  intervaloClickPrimario = null
 }
 
 function atualizarVelocidadeClickPrimario() {
-  pararClickAutomaticoPrimario();
-  iniciarClickAutomaticoPrimario();
+  pararClickAutomaticoPrimario()
+  iniciarClickAutomaticoPrimario()
 }
 
 ui.clickAutomaticoLabel.textContent = "Click automatico - " + game.clickAutomaticoValor
@@ -151,25 +157,47 @@ ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
 ui.clickAutomaticoBotao.addEventListener("click", clickAutomatico)
 
 function clickAutomatico() {
-  if (!podeComprar(game.clickAutomaticoValor)) return;
+  if (!podeComprar(game.clickCriticoValor)) return
 
-  game.clickAutomaticoHabilitado = true;
-  game.clickAutomaticoNivelAtual++;
-  game.clickAutomaticoValor *= 2;
+  game.clickAutomaticoHabilitado = true
+  game.clickAutomaticoNivelAtual++
+  game.clickAutomaticoValor *= 2
   game.clickAutomaticoTempo = Math.max(100,game.clickAutomaticoTempo - game.clickAutomaticoNivelAtual * 10
-  );
+  )
 
-  ui.clickAutomaticoLabel.textContent ="Click automatico - " + game.clickAutomaticoValor;
-  ui.clickAutomaticoNivel.textContent ="Nivel: " + game.clickAutomaticoNivelAtual;
+  ui.clickAutomaticoLabel.textContent ="Click automatico - " + game.clickAutomaticoValor
+  ui.clickAutomaticoNivel.textContent ="Nivel: " + game.clickAutomaticoNivelAtual
 
   if (game.clickAutomaticoNivelAtual === 1) {
-    iniciarClickAutomaticoPrimario();
+    iniciarClickAutomaticoPrimario()
   } else {
-    atualizarVelocidadeClickPrimario();
+    atualizarVelocidadeClickPrimario()
   }
 
   if (game.clickAutomaticoNivelAtual >= game.clickAutomaticoNivelMaximo) {
-    ui.clickAutomaticoLabel.textContent = "Nível máximo";
-    ui.clickAutomaticoBotao.removeEventListener("click", clickAutomatico);
+    ui.clickAutomaticoLabel.textContent = "Nível máximo"
+    ui.clickAutomaticoBotao.removeEventListener("click", clickAutomatico)
+  }
+}
+
+ui.clickCriticoLabel.textContent = "Click crítico - " + game.clickCriticoValor
+ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
+ui.clickCriticoBotao.addEventListener("click", clickCritico)
+
+function clickCritico(){
+  if(podeComprar(game.clickCriticoValor)) return
+
+  game.clickCriticoNivelAtual++
+  game.clickCriticoValor *= 2
+  game.clickCriticoChance *= 1.5
+
+  if(game.clickCriticoNivelAtual >= game.clickCriticoNivelMaximo){
+    ui.clickCriticoLabel.textContent = "Nivel máximo"
+    ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
+  }
+}
+function clickCriticoSorteador(){
+  if(game.clickCriticoChance < Math.random()){
+    console.log("deu certo")
   }
 }

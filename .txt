@@ -1,0 +1,22 @@
+terminar estilo 3
+fazer estilo para arvore de habilidades
+
+
+function clique secundario
+
+
+function iniciarClickAutomaticoSecundario() {
+  if (intervaloClickSecundario) return;
+
+  intervaloClickSecundario = setInterval(() => {
+    game.pontosSecundario += game.valorClickSecundario;
+    atualizaPontosSecundario();
+  }, game.clickAutomaticoTempo);
+}
+
+function pararClickAutomaticoSecundario() {
+  if (!intervaloClickSecundario) return;
+
+  clearInterval(intervaloClickSecundario);
+  intervaloClickSecundario = null;
+}
