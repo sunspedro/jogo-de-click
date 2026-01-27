@@ -28,6 +28,26 @@
   background-color: #fff;
   margin-right: 100px;
 }
+.pontos2{
+  display: none;
+}
+.btn-secundario{
+  display: none;
+  border: none;
+  color: var(--white-100);
+  font-weight: 700;
+  font-size: 16px;
+  background-color: var(--red-500);
+  border-radius: 10px;
+  padding: 40px;
+  transition: all 1s ease;
+  margin-top: 50px;
+}
+.btn-secundario:hover{
+  background-color: var(--white-100);
+  color: var(--black-100);
+
+}
 .card{
   display: flex;
   flex-direction: column;
@@ -196,7 +216,7 @@
   .card:hover{
     filter: brightness(0.9);
   }
-  /* .pontos{
+  .pontos{
     width: 400px;
     height: 325px;
   }
@@ -218,12 +238,12 @@
       margin: 0px 0px 15px 0px;
     }
   }
-  .pontos2{
-    background-color: var(--red-100);
-  } */
   .lista-pontos:hover{
     transform: scale(1.05);
   }
+  .pontos2{
+  display: none;
+}
 }
 
 #arvoreHabilidades{
@@ -250,5 +270,14 @@
       margin: 40px;
       background-color: #000;
     }
+  }
+}
+.estilo4{
+  .pontos2{
+    display: flex;
+    background-color: var(--red-100);
+  }
+  .btn-secundario{
+    display: flex;
   }
 }

@@ -11,16 +11,19 @@
     <div class="card pontos">
       <div class="lista-pontos">
         <h2 class="pontos-title">Pontuação 1 </h2>
-        <p id="pontos" class="valor"></p>
+        <p id="pontosPrimario" class="valor"></p>
       </div>
-      <!-- <div class="lista-pontos pontos2">
+      <div class="lista-pontos pontos2">
         <h2 class="pontos-title">Pontuação 2 </h2>
-        <p class="valor">asdasdasds</p>
-      </div> -->
+        <p class="valor" id="pontosSecundario"></p>
+      </div>
     </div>
     <div class="card principal">
       <h2>Click game</h2>
-      <button class="btn-principal" id="onClick">
+      <button class="btn-principal" id="onClickPrimario">
+        <i class="fa-regular fa-hand-pointer fa-2xl" ></i>
+      </button>
+      <button class="btn-secundario" id="onClickSecundario">
         <i class="fa-regular fa-hand-pointer fa-2xl" ></i>
       </button>
     </div>
@@ -38,10 +41,14 @@
       <h2>Titulo</h2>
       <div class="listaCategorias">
         <div class="item">
-          <p>item um</p>
+          <p id="clickAutomatico"></p>
+          <p id="clickAutomaticoNivel"></p>
+          <button id="clickAutomaticoBotao">Comprar</button>
         </div>
         <div class="item">
-          <p>item dois</p>
+          <p id="clickCritico"></p>
+          <p id="clickCriticoNivel"></p>
+          <button id="clickCriticoBotao"></button>
         </div>
         <div class="item">
           <p>item tres</p>

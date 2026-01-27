@@ -1,27 +1,48 @@
 const game = {
-  pontos: 0,
+  pontosPrimario: 0,
+  pontosSecundario: 0,
   valorClick: 1000,
+  valorClickSecundario: 1000,
   precoMelhoraValor: 100,
   precoMelhoraEstilo: 200,
   precoHabilidade: 1000,
   classeEstilo: 0,
   estiloMaximo: 3,
+  clickAutomaticoValor: 1000,
+  clickAutomaticoNivelAtual: 0,
+  clickAutomaticoNivelMaximo: 20,
+  clickAutomaticoTempo: 10000,
+  clickAutomaticoHabilitado: false,
 }
 
 const ui = {
-  pontos: document.getElementById("pontos"),
-  btnClick: document.getElementById("onClick"),
+  pontosPrimario: document.getElementById("pontosPrimario"),
+  pontosSecundario: document.getElementById("pontosSecundario"),
+  btnClickPrimario: document.getElementById("onClickPrimario"),
+  btnClickSecundario: document.getElementById("onClickSecundario"),
   melhoraValor: document.getElementById("melhoraValor"),
   melhoraEstilo: document.getElementById("melhoraEstilo"),
   estiloGeral: document.getElementById("estiloGeral"),
   overlay: document.getElementById("overlay"),
   fechaModal: document.getElementById("fechaModal"),
   botaoHabilidade: document.getElementById("habilitaHabilidades"),
-  arvoreHabilidades: document.getElementById("arvoreHabilidades")
+  arvoreHabilidades: document.getElementById("arvoreHabilidades"),
+  clickAutomaticoLabel: document.getElementById("clickAutomatico"),
+  clickAutomaticoNivel: document.getElementById("clickAutomaticoNivel"),
+  clickAutomaticoBotao: document.getElementById("clickAutomaticoBotao"),
+  clickCriticoLabel: document.getElementById("clickCritico"),
+  clickCriticoNivel: document.getElementById("clickCriticoNivel"),
+  clickCriticoBotao: document.getElementById("clickCriticoBotao"),
 }
 
-function atualizaPontos() {
-  ui.pontos.textContent = game.pontos
+let intervaloClickPrimario = null;
+let intervaloClickSecundario = null;
+
+function atualizaPontosPrimario() {
+  ui.pontosPrimario.textContent = game.pontosPrimario
+}
+function atualizaPontosSecundario() {
+  ui.pontosSecundario.textContent = game.pontosSecundario
 }
 
 function abreModal() {
@@ -29,20 +50,29 @@ function abreModal() {
 }
 
 function podeComprar(preco) {
-  if (preco <= game.pontos) {
-    game.pontos -= preco
-    atualizaPontos()
+  if (preco <= game.pontosPrimario) {
+    game.pontosPrimario -= preco
+    atualizaPontosPrimario()
     return true
   }
   abreModal()
   return false
 }
 
-atualizaPontos()
+atualizaPontosPrimario()
 
-ui.btnClick.addEventListener("click", () => {
-  game.pontos += game.valorClick
-  atualizaPontos()
+function atualizaValorPrimario(){
+  game.pontosPrimario += game.valorClick
+  atualizaPontosPrimario()
+}
+
+ui.btnClickPrimario.addEventListener("click", () => {
+  atualizaValorPrimario()
+})
+
+ui.btnClickSecundario.addEventListener("click", () => {
+  game.pontosSecundario += game.valorClickSecundario
+  atualizaPontosSecundario()
 })
 
 ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
@@ -89,7 +119,57 @@ function clickHabilidades() {
     ui.botaoHabilidade.removeEventListener("click", clickHabilidades)
     ui.botaoHabilidade.textContent = "Habilitado"
     ui.arvoreHabilidades.style.display = "flex"
+    ui.estiloGeral.classList.add("estilo" + "4")
+    atualizaPontosSecundario()
   }
 }
 
 ui.botaoHabilidade.addEventListener("click", clickHabilidades)
+
+function iniciarClickAutomaticoPrimario() {
+  if (intervaloClickPrimario) return;
+
+  intervaloClickPrimario = setInterval(() => {
+    atualizaValorPrimario();
+  }, game.clickAutomaticoTempo);
+}
+
+function pararClickAutomaticoPrimario() {
+  if (!intervaloClickPrimario) return;
+
+  clearInterval(intervaloClickPrimario);
+  intervaloClickPrimario = null;
+}
+
+function atualizarVelocidadeClickPrimario() {
+  pararClickAutomaticoPrimario();
+  iniciarClickAutomaticoPrimario();
+}
+
+ui.clickAutomaticoLabel.textContent = "Click automatico - " + game.clickAutomaticoValor
+ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
+ui.clickAutomaticoBotao.addEventListener("click", clickAutomatico)
+
+function clickAutomatico() {
+  if (!podeComprar(game.clickAutomaticoValor)) return;
+
+  game.clickAutomaticoHabilitado = true;
+  game.clickAutomaticoNivelAtual++;
+  game.clickAutomaticoValor *= 2;
+  game.clickAutomaticoTempo = Math.max(100,game.clickAutomaticoTempo - game.clickAutomaticoNivelAtual * 10
+  );
+
+  ui.clickAutomaticoLabel.textContent ="Click automatico - " + game.clickAutomaticoValor;
+  ui.clickAutomaticoNivel.textContent ="Nivel: " + game.clickAutomaticoNivelAtual;
+
+  if (game.clickAutomaticoNivelAtual === 1) {
+    iniciarClickAutomaticoPrimario();
+  } else {
+    atualizarVelocidadeClickPrimario();
+  }
+
+  if (game.clickAutomaticoNivelAtual >= game.clickAutomaticoNivelMaximo) {
+    ui.clickAutomaticoLabel.textContent = "Nível máximo";
+    ui.clickAutomaticoBotao.removeEventListener("click", clickAutomatico);
+  }
+}
