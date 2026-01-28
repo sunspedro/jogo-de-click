@@ -18,9 +18,10 @@ const game = {
   clickCriticoValor: 2000,
   clickCriticoChance: 0.02,
   clickMultiploNivelAtual: 0,
-  clickMultiploNivelMaximo: 20,
+  clickMultiploNivelMaximo: 10,
   clickMultiploValor: 4000,
-  clickMultiploCont: 100,
+  clickMultiploAtiva: 150,
+  clickMultiploCont: 1,
 }
 
 const ui = {
@@ -50,6 +51,31 @@ const ui = {
 
 let intervaloClickPrimario = null
 let intervaloClickSecundario = null
+let currentScroll = window.scrollY
+let targetScroll = currentScroll
+let scrolling = false
+
+function inertiaScroll() {
+  if (!scrolling) return
+
+  currentScroll += (targetScroll - currentScroll) * 0.1
+  window.scrollTo(0, currentScroll)
+
+  if (Math.abs(targetScroll - currentScroll) < 0.5) {
+    scrolling = false
+    return
+  }
+
+  requestAnimationFrame(inertiaScroll)
+}
+function scrollToId(id) {
+  const el = document.getElementById(id)
+  if (!el) return
+
+  targetScroll = el.getBoundingClientRect().top + window.scrollY
+  scrolling = true
+  requestAnimationFrame(inertiaScroll)
+}
 
 function atualizaPontosPrimario() {
   ui.pontosPrimario.textContent = game.pontosPrimario
@@ -80,6 +106,7 @@ function podeComprar(preco) {
     return true
   }
   abreModalPontos()
+  scrollToId("estiloGeral")
   return false
 }
 
@@ -92,12 +119,21 @@ function atualizaValorPrimario(){
 
 ui.btnClickPrimario.addEventListener("click", () => {
   if(game.clickMultiploNivelAtual > 0){
-    game.clickMultiploCont -= 1
+    game.clickMultiploCont++
 
-    //terminar o bloco com função pra clique x10
+    if(game.clickMultiploCont > game.clickMultiploAtiva){
+      game.clickMultiploCont = 0
+      game.pontosPrimario += game.valorClick * 10
+      atualizaPontosPrimario()
+    }
+    else{
+      atualizaValorPrimario()
+    }
 
   }
-  atualizaValorPrimario()
+  else{
+    atualizaValorPrimario()
+  }
   clickCriticoSorteador()
 })
 
@@ -231,5 +267,10 @@ ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
 ui.clickMultiploBotao.addEventListener("click", clickMultiplo)
 
 function clickMultiplo(){
-
+  if(podeComprar(game.clickMultiploValor)){
+    game.clickMultiploNivelAtual++
+    game.clickMultiploValor*=2
+    ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
+    ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
+  }
 }
