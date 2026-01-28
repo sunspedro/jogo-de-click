@@ -1,3 +1,31 @@
+/* reset  */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+/* variaveis  */
 :root {
   --red-100: #4D0000;
   --red-200: #7A0000;
@@ -17,7 +45,6 @@
   --white-200: #B5A0A0;
   --white-100: #F5EDED;
 }
-
 #estiloGeral{
   height: 50vw;
   background-color: var(--black);
@@ -59,8 +86,9 @@
   background-color: var(--white-100);
 }
 .card h2{
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 700;
+  margin: 20px;
 }
 .card p{
   font-size: 22px;
@@ -258,7 +286,8 @@
     color: var(--red-1000);
   }
   h3{
-    margin-top: 50px;
+    margin: 50px 0px 20px 0px;
+
   }
   .listaHabilidades{
     display: flex;
@@ -277,9 +306,11 @@
         flex-direction: column;
         padding: 50px;
         background-color: var(--black-200);
-        min-width: 220px;
+        width: 400px;
+        height: 400px;
         p{
           font-size: 16px;
+          margin-block: 10px;
         }
         .title{
           display: flex;
