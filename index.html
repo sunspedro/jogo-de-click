@@ -20,7 +20,7 @@
     </div>
     <div class="card principal">
       <h2>Click game</h2>
-      <button class="btn-principal" id="onClickPrimario">
+      <button class="btn-principal btn-click" id="onClickPrimario">
         <i class="fa-regular fa-hand-pointer fa-2xl" ></i>
       </button>
       <button class="btn-secundario" id="onClickSecundario">
@@ -38,32 +38,37 @@
   <div id="arvoreHabilidades">
     <h2>Arvore de habilidades</h2>
     <div class="listaHabilidades">
-      <h2>Titulo</h2>
+      <h3>Habilidades iniciais</h3>
       <div class="listaCategorias">
         <div class="item">
+          <p class="title">Clique automatico</p>
           <p id="clickAutomatico"></p>
           <p id="clickAutomaticoNivel"></p>
           <button id="clickAutomaticoBotao">Comprar</button>
         </div>
         <div class="item">
+          <p class="title">Clique Critico</p>
           <p id="clickCritico"></p>
           <p id="clickCriticoNivel"></p>
           <button id="clickCriticoBotao">Comprar</button>
         </div>
         <div class="item">
-          <p>item tres</p>
+          <p class="title">Clique Multiplo</p>
+          <p id="clickMultiplo"></p>
+          <p id="clickMultiploNivel"></p>
+          <button id="clickCriticoBotao">Comprar</button>
         </div>
       </div>
-      <h2>Titulo</h2>
+      <h3>Habilidades secundarias</h3>
       <div class="listaCategorias">
         <div class="item">
-          <p>item um</p>
+          <p class="title">item um</p>
         </div>
         <div class="item">
-          <p>item dois</p>
+          <p class="title">item dois</p>
         </div>
         <div class="item">
-          <p>item tres</p>
+          <p class="title">item tres</p>
         </div>
       </div>
 
@@ -72,11 +77,21 @@
 
 
   <div id="overlay">
-    <div id="modal">
+    <div id="modalPontosInsuficientes">
       <h2>Pontos insuficientes</h2>
-      <button class="btn" id="fechaModal">Fechar</button>
+      <button class="btn" id="fechaModalPontos">Fechar</button>
     </div>
   </div>
+
+  <div id="overlay2">
+    <div id="modalNovoBotao">
+      <h2 class="title">Novo botão</h2>
+      <p class="description">Ele serve pra comprar habilidades secundarias, a pontuação nova fica em baixo da pontuação primaria</p>
+      <button class="btn" id="fechaModalNovoBotao">Fechar</button>
+    </div>
+  </div>
+      
+
   <script src="script.js"></script>
 </body>
 </html>

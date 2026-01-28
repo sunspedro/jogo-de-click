@@ -17,6 +17,10 @@ const game = {
   clickCriticoNivelMaximo: 20,
   clickCriticoValor: 2000,
   clickCriticoChance: 0.02,
+  clickMultiploNivelAtual: 0,
+  clickMultiploNivelMaximo: 20,
+  clickMultiploValor: 4000,
+  clickMultiploCont: 100,
 }
 
 const ui = {
@@ -28,7 +32,9 @@ const ui = {
   melhoraEstilo: document.getElementById("melhoraEstilo"),
   estiloGeral: document.getElementById("estiloGeral"),
   overlay: document.getElementById("overlay"),
-  fechaModal: document.getElementById("fechaModal"),
+  fechaModalPontos: document.getElementById("fechaModalPontos"),
+  overlay2: document.getElementById("overlay2"),
+  fechaModalNovoBotao: document.getElementById("fechaModalNovoBotao"),
   botaoHabilidade: document.getElementById("habilitaHabilidades"),
   arvoreHabilidades: document.getElementById("arvoreHabilidades"),
   clickAutomaticoLabel: document.getElementById("clickAutomatico"),
@@ -37,6 +43,9 @@ const ui = {
   clickCriticoLabel: document.getElementById("clickCritico"),
   clickCriticoNivel: document.getElementById("clickCriticoNivel"),
   clickCriticoBotao: document.getElementById("clickCriticoBotao"),
+  clickMultiploLabel: document.getElementById("clickMultiplo"),
+  clickMultiploNivel: document.getElementById("clickMultiploNivel"),
+  clickMultiploBotao: document.getElementById("clickMultiploBotao"),
 }
 
 let intervaloClickPrimario = null
@@ -49,9 +58,20 @@ function atualizaPontosSecundario() {
   ui.pontosSecundario.textContent = game.pontosSecundario
 }
 
-function abreModal() {
+function abreModalPontos() {
   ui.overlay.style.display = "block"
 }
+
+ui.fechaModalPontos.addEventListener("click", () => {
+  ui.overlay.style.display = "none"
+})
+
+function abreModalNovoBotao() {
+  ui.overlay2.style.display = "block"
+}
+ui.fechaModalNovoBotao.addEventListener("click", () => {
+  ui.overlay2.style.display = "none"
+})
 
 function podeComprar(preco) {
   if (preco <= game.pontosPrimario) {
@@ -59,7 +79,7 @@ function podeComprar(preco) {
     atualizaPontosPrimario()
     return true
   }
-  abreModal()
+  abreModalPontos()
   return false
 }
 
@@ -71,6 +91,12 @@ function atualizaValorPrimario(){
 }
 
 ui.btnClickPrimario.addEventListener("click", () => {
+  if(game.clickMultiploNivelAtual > 0){
+    game.clickMultiploCont -= 1
+
+    //terminar o bloco com função pra clique x10
+
+  }
   atualizaValorPrimario()
   clickCriticoSorteador()
 })
@@ -114,10 +140,6 @@ function clickMelhoraEstilo() {
 
 ui.melhoraEstilo.addEventListener("click", clickMelhoraEstilo)
 
-ui.fechaModal.addEventListener("click", () => {
-  ui.overlay.style.display = "none"
-})
-
 ui.botaoHabilidade.textContent = "Valor para habilitar arvore de habilidades: " + game.precoHabilidade
 
 function clickHabilidades() {
@@ -126,6 +148,7 @@ function clickHabilidades() {
     ui.botaoHabilidade.textContent = "Habilitado"
     ui.arvoreHabilidades.style.display = "flex"
     ui.estiloGeral.classList.add("estilo" + "4")
+    abreModalNovoBotao()
     atualizaPontosSecundario()
   }
 }
@@ -152,7 +175,7 @@ function atualizarVelocidadeClickPrimario() {
   iniciarClickAutomaticoPrimario()
 }
 
-ui.clickAutomaticoLabel.textContent = "Click automatico - " + game.clickAutomaticoValor
+ui.clickAutomaticoLabel.textContent = "Valor: " + game.clickAutomaticoValor
 ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
 ui.clickAutomaticoBotao.addEventListener("click", clickAutomatico)
 
@@ -165,7 +188,7 @@ function clickAutomatico() {
   game.clickAutomaticoTempo = Math.max(100,game.clickAutomaticoTempo - game.clickAutomaticoNivelAtual * 10
   )
 
-  ui.clickAutomaticoLabel.textContent ="Click automatico - " + game.clickAutomaticoValor
+  ui.clickAutomaticoLabel.textContent ="Valor: " + game.clickAutomaticoValor
   ui.clickAutomaticoNivel.textContent ="Nivel: " + game.clickAutomaticoNivelAtual
 
   if (game.clickAutomaticoNivelAtual === 1) {
@@ -180,7 +203,7 @@ function clickAutomatico() {
   }
 }
 
-ui.clickCriticoLabel.textContent = "Click crítico - " + game.clickCriticoValor
+ui.clickCriticoLabel.textContent = "Valor: " + game.clickCriticoValor
 ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
 ui.clickCriticoBotao.addEventListener("click", clickCritico)
 
@@ -201,4 +224,12 @@ function clickCriticoSorteador(){
   if(game.clickCriticoChance > Math.random()){
     console.log("deu certo")
   }
+}
+
+ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
+ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
+ui.clickMultiploBotao.addEventListener("click", clickMultiplo)
+
+function clickMultiplo(){
+
 }
