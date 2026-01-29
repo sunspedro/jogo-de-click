@@ -24,7 +24,11 @@ const game = {
   clickMultiploCont: 1,
   efeitoClickValor: 1000,
   efeitoBolinhasValor: 5000,
+  efeitoClickHabilitado: false,
   efeitoBolinhasAtivado: false,
+  efeitoQuadradosAtivado: false,
+  efeitoQuadradosValor: 5000,
+
 }
 
 const ui = {
@@ -56,7 +60,7 @@ const ui = {
   efeitoClickBotao: document.getElementById("efeitoClickBotao"),
   efeitoBolinhasLabel: document.getElementById("efeitoBolinhasLabel"),
   efeitoBolinhasButton: document.getElementById("efeitoBolinhasButton"),
-
+  efeitoBolinhasButton: document.getElementById("efeitoQuadradoButton"),
 }
 
 let intervaloClickPrimario = null
@@ -86,6 +90,10 @@ function scrollToId(id) {
   targetScroll = el.getBoundingClientRect().top + window.scrollY
   scrolling = true
   requestAnimationFrame(inertiaScroll)
+}
+
+function desativaBotoes(){
+  game.efeitoBolinhasAtivado = false
 }
 
 function atualizaPontosPrimario() {
@@ -296,18 +304,42 @@ function clickMultiplo(){
   }
 }
 
+ui.efeitoClickLabel.textContent = "Valor: " + game.efeitoClickValor
+ui.efeitoClickBotao.textContent = "Comprar"
+
 function efeitoCLick(){
   if(podeComprar(game.efeitoClickValor)){
-    ui.efeitoClickBotao = "Abrir efeitos"
+    ui.efeitoClickBotao.textContent = "Abrir efeitos"
+    game.efeitoClickHabilitado = true
+  }
+  if(game.efeitoClickHabilitado == true){
     abreModalEfeitoCLick()
   }
 }
 
 ui.efeitoClickBotao.addEventListener("click", efeitoCLick)
 
+
+//efeitos de click
+function efeitoQuadrados(){
+  if(podeComprar(game.efeitoQuadradosValor)){
+    desativaBotoes()
+    game.efeitoQuadradosAtivado = true
+    ui.efeitoQuadradosButton.textContent = "Habilitado"
+  }
+}
+
+ui.efeitoQuadradosButton.addEventListener("click", efeitoQuadrados)
+
+
+
+ui.efeitoBolinhasButton.textContent = "Comprar"
+
 function efeitoBolinhas(){
   if(podeComprar(game.efeitoBolinhasValor)){
+    desativaBotoes()
     game.efeitoBolinhasAtivado = true
+    ui.efeitoBolinhasButton.textContent = "Habilitado"
   }
 }
 
