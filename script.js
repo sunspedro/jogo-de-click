@@ -22,6 +22,9 @@ const game = {
   clickMultiploValor: 4000,
   clickMultiploAtiva: 150,
   clickMultiploCont: 1,
+  efeitoClickValor: 1000,
+  efeitoBolinhasValor: 5000,
+  efeitoBolinhasAtivado: false,
 }
 
 const ui = {
@@ -36,6 +39,8 @@ const ui = {
   fechaModalPontos: document.getElementById("fechaModalPontos"),
   overlay2: document.getElementById("overlay2"),
   fechaModalNovoBotao: document.getElementById("fechaModalNovoBotao"),
+  overlay3: document.getElementById("overlay3"),
+  fechaModalEfeitoClick: document.getElementById("fechaModalEfeitoClick"),
   botaoHabilidade: document.getElementById("habilitaHabilidades"),
   arvoreHabilidades: document.getElementById("arvoreHabilidades"),
   clickAutomaticoLabel: document.getElementById("clickAutomatico"),
@@ -47,6 +52,11 @@ const ui = {
   clickMultiploLabel: document.getElementById("clickMultiplo"),
   clickMultiploNivel: document.getElementById("clickMultiploNivel"),
   clickMultiploBotao: document.getElementById("clickMultiploBotao"),
+  efeitoClickLabel: document.getElementById("efeitoClickLabel"),
+  efeitoClickBotao: document.getElementById("efeitoClickBotao"),
+  efeitoBolinhasLabel: document.getElementById("efeitoBolinhasLabel"),
+  efeitoBolinhasButton: document.getElementById("efeitoBolinhasButton"),
+
 }
 
 let intervaloClickPrimario = null
@@ -68,6 +78,7 @@ function inertiaScroll() {
 
   requestAnimationFrame(inertiaScroll)
 }
+
 function scrollToId(id) {
   const el = document.getElementById(id)
   if (!el) return
@@ -86,6 +97,7 @@ function atualizaPontosSecundario() {
 
 function abreModalPontos() {
   ui.overlay.style.display = "block"
+  scrollToId("estiloGeral")
 }
 
 ui.fechaModalPontos.addEventListener("click", () => {
@@ -94,9 +106,18 @@ ui.fechaModalPontos.addEventListener("click", () => {
 
 function abreModalNovoBotao() {
   ui.overlay2.style.display = "block"
+  scrollToId("estiloGeral")
 }
 ui.fechaModalNovoBotao.addEventListener("click", () => {
   ui.overlay2.style.display = "none"
+})
+
+function abreModalEfeitoCLick() {
+  ui.overlay3.style.display = "block"
+  scrollToId("estiloGeral")
+}
+ui.fechaModalEfeitoClick.addEventListener("click", () => {
+  ui.overlay3.style.display = "none"
 })
 
 function podeComprar(preco) {
@@ -274,3 +295,65 @@ function clickMultiplo(){
     ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
   }
 }
+
+function efeitoCLick(){
+  if(podeComprar(game.efeitoClickValor)){
+    ui.efeitoClickBotao = "Abrir efeitos"
+    abreModalEfeitoCLick()
+  }
+}
+
+ui.efeitoClickBotao.addEventListener("click", efeitoCLick)
+
+function efeitoBolinhas(){
+  if(podeComprar(game.efeitoBolinhasValor)){
+    game.efeitoBolinhasAtivado = true
+  }
+}
+
+ui.efeitoBolinhasButton.addEventListener("click", efeitoBolinhas)
+
+document.addEventListener("click", (e) => {
+  if (!game.efeitoBolinhasAtivado) return;
+
+  const quantidade = 12;
+  const raioInicial = 10;
+  const raioFinal = 26;
+  const duracao = 600;
+
+  const bolinhas = [];
+  const inicio = performance.now();
+
+  for (let i = 0; i < quantidade; i++) {
+    const b = document.createElement("div");
+    b.className = "bolinha";
+    document.body.appendChild(b);
+
+    bolinhas.push({
+      el: b,
+      angulo: (Math.PI * 2 / quantidade) * i
+    });
+  }
+
+  function animar(tempo) {
+    const progresso = Math.min((tempo - inicio) / duracao, 1);
+    const raio = raioInicial + (raioFinal - raioInicial) * progresso;
+
+    bolinhas.forEach(b => {
+      const x = e.clientX + Math.cos(b.angulo) * raio;
+      const y = e.clientY + Math.sin(b.angulo) * raio;
+
+      b.el.style.left = x + "px";
+      b.el.style.top = y + "px";
+      b.el.style.opacity = 1 - progresso;
+    });
+
+    if (progresso < 1) {
+      requestAnimationFrame(animar);
+    } else {
+      bolinhas.forEach(b => b.el.remove());
+    }
+  }
+
+  requestAnimationFrame(animar);
+});

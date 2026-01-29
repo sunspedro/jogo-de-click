@@ -5,6 +5,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  user-select: none;
 }
 
 html, body {
@@ -418,4 +419,15 @@ button, input, textarea, select {
       font-size: 22px;
     }
   }
+}
+
+.bolinha {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff4d4d;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.6s ease;
 }
