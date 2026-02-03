@@ -28,7 +28,6 @@ const game = {
   efeitoBolinhasAtivado: false,
   efeitoQuadradosAtivado: false,
   efeitoQuadradosValor: 5000,
-
 }
 
 const ui = {
