@@ -1,3 +1,10 @@
+<?php
+if (file_exists('global.php')) {
+  require_once 'global.php';
+  echo 'teste';
+}
+var_dump($conexao)
+?>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
