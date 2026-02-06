@@ -14,17 +14,21 @@
     <div class="esquerda">
       <div class="formulario">
         <h2 class="form-title">Jogo de click!</h2>
-        <form method="post" >
+        <form method="post" action="verificaLogin.php">
           <div class="info-login">
-            <label class="label" for="senha">Usuario</label>
+            <label class="label" for="senha">Nome de usuario</label>
             <input type="text" autocomplete="none" name="usuario" required>
           </div>
           <div class="info-login">
             <label class="label" for="senha">Senha</label>
             <input type="password" autocomplete="new-password" name="senha" required>
           </div>
+          <div class="info-login">
+            <label class="label" for="senha">Repetir a senha</label>
+            <input type="password" autocomplete="new-password" name="senha2" required>
+          </div>
           <button type="submit">Entrar</button>
-          <a href="conta.php">Cadastrar</a>
+          <a href="index.php">Já tenho conta</a>
       </form>
       </div>
     </div>
