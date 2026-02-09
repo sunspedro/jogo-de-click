@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="style/login.css">
   <title>Login</title>
 </head>
 <body>
   <div class="geral">
     <div class="direita">
-      <img src="https://picsum.photos/200/300">
+      <img src="https://picsum.photos/1920/75">
     </div>
     <div class="esquerda">
       <div class="formulario">
         <h2 class="form-title">Jogo de click!</h2>
-        <form method="post" action="verificaLogin.php">
+        <form method="post" action="banco/cadastro.php">
           <div class="info-login">
             <label class="label" for="senha">Nome de usuario</label>
             <input type="text" autocomplete="none" name="usuario" required>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="style/login.css">
   <title>Login</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class="esquerda">
       <div class="formulario">
         <h2 class="form-title">Jogo de click!</h2>
-        <form method="post" >
+        <form method="post" action="banco/verificaLogin.php">
           <div class="info-login">
             <label class="label" for="senha">Usuario</label>
             <input type="text" autocomplete="none" name="usuario" required>
