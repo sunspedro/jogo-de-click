@@ -57,9 +57,10 @@ const ui = {
   clickMultiploBotao: document.getElementById("clickMultiploBotao"),
   efeitoClickLabel: document.getElementById("efeitoClickLabel"),
   efeitoClickBotao: document.getElementById("efeitoClickBotao"),
-  efeitoBolinhasLabel: document.getElementById("efeitoBolinhasLabel"),
+  efeitoBolinhasLabel: document.getElementById("efeitoBolinhasValor"),
   efeitoBolinhasButton: document.getElementById("efeitoBolinhasButton"),
-  efeitoBolinhasButton: document.getElementById("efeitoQuadradoButton"),
+  efeitoQuadradoLabel: document.getElementById("efeitoQuadradosValor"),
+  efeitoQuadradoButton: document.getElementById("efeitoQuadradoButton"),
 }
 
 let intervaloClickPrimario = null
@@ -320,18 +321,6 @@ ui.efeitoClickBotao.addEventListener("click", efeitoCLick)
 
 
 //efeitos de click
-function efeitoQuadrados(){
-  if(podeComprar(game.efeitoQuadradosValor)){
-    desativaBotoes()
-    game.efeitoQuadradosAtivado = true
-    ui.efeitoQuadradosButton.textContent = "Habilitado"
-  }
-}
-
-ui.efeitoQuadradosButton.addEventListener("click", efeitoQuadrados)
-
-
-
 ui.efeitoBolinhasButton.textContent = "Comprar"
 
 function efeitoBolinhas(){
@@ -388,3 +377,29 @@ document.addEventListener("click", (e) => {
 
   requestAnimationFrame(animar);
 });
+
+ui.efeitoQuadradoButton.textContent = "Comprar"
+
+function efeitoQuadrados(){
+  if(podeComprar(game.efeitoQuadradosValor)){
+    desativaBotoes()
+    game.efeitoQuadradosAtivado = true
+    ui.efeitoQuadradoButton.textContent = "Habilitado"
+  }
+  if(game.efeitoQuadradosAtivado == true){
+    const cursor = document.querySelector('.cursor');
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX - 12 + 'px';
+      cursor.style.top  = e.clientY - 12 + 'px';
+    });
+
+    document.addEventListener('click', () => {
+      cursor.classList.add('spin');
+
+      setTimeout(() => {
+        cursor.classList.remove('spin');
+      }, 400);
+    });
+  }
+}

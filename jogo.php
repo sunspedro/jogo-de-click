@@ -115,8 +115,8 @@ if (file_exists('global.php')) {
           <button id="efeitoBolinhasButton"></button>
         </div>
         <div class="efeitos-item">
-          <h3>Efeito de bolinhas</h3>
-          <p id="efeitoBolinhasValor"></p>
+          <h3>Efeito de Giro</h3>
+          <p id="efeitoQuadradoValor"></p>
           <button id="efeitoQuadradoButton">Comprar</button>
         </div>
         <div class="efeitos-item">

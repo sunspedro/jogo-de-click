@@ -1,17 +1,20 @@
 <?php
-if (file_exists('classes/.env.php')) {
-  require_once 'classes/.env.php';
-} 
+
+if (file_exists('../classes/.env.php')) {
+    require_once '../classes/.env.php';
+    echo 'passou';
+} else if(file_exists('classes/.env.php')){
+    require_once 'classes/.env.php';
+}
+else {
+    echo 'nao passou';
+}
 
 function carregarClasse($nomeClasse)
 {
-  if (file_exists('classes/' . $nomeClasse . '.php')) {
     require_once 'classes/' . $nomeClasse . '.php';
-  } else if (file_exists('classes/' . $nomeClasse . '.php')) {
-    require_once 'classes/' . $nomeClasse . '.php';
-  }
 }
-spl_autoload_register('carregarClasse');
 
+spl_autoload_register('carregarClasse');
 
 $conexao = Conexao::pegarConexao();

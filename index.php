@@ -9,7 +9,7 @@
 <body>
   <div class="geral">
     <div class="direita">
-      <img src="https://picsum.photos/200/300">
+      <img src="https://picsum.photos/1920/750">
     </div>
     <div class="esquerda">
       <div class="formulario">

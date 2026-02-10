@@ -1,7 +1,8 @@
 <?php
+session_start();
 
-require_once './global.php';
-require_once 'classes/conexao.php';
+require_once '../global.php';
+require_once '../classes/conexao.php';
 
 $conn = Conexao::pegarConexao();
 
@@ -23,3 +24,13 @@ $stmt->bindParam(':usuario', $usuario);
 $stmt->bindParam(':senha', $senha);
 
 $stmt->execute();
+
+$id = $conn->lastInsertId();
+
+if ($id) {
+    $_SESSION['usuario'] = $usuario;
+    $_SESSION['id'] = $id;
+
+    header("Location: ../jogo.php");
+    exit;
+}

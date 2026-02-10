@@ -2,8 +2,8 @@
 
 session_start();
 
-require_once 'global.php';
-require_once 'classes/conexao.php';
+require_once '../global.php';
+require_once '../classes/conexao.php';
 
 $conn = Conexao::pegarConexao();
 
@@ -28,12 +28,6 @@ if ($user) {
     $_SESSION['usuario'] = $user['NOME'];
     $_SESSION['id'] = $user['id'];
 
-    header("Location: jogo.php");
+    header("Location: ../jogo.php");
     exit;
-
-} else {
-
-    ;
-    exit;
-
-}
+} 
