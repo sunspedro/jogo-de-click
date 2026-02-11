@@ -131,6 +131,6 @@ if (file_exists('global.php')) {
 
 
 
-  <script src="script.js"></script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

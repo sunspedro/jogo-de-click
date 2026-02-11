@@ -1,36 +1,3 @@
-terminar estilo 3
-fazer estilo para arvore de habilidades
-
-
-efeito pra clique
-
-.click-effect {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.8);
-  pointer-events: none;
-  animation: explode 0.4s ease-out forwards;
-}
-
-@keyframes explode {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-const effect = document.createElement("div")
-  effect.className = "click-effect"
-
-  const rect = ui.btnClickPrimario.getBoundingClientRect()
-  effect.style.left = e.clientX - rect.left - 10 + "px"
-  effect.style.top = e.clientY - rect.top - 10 + "px"
-
-  ui.btnClickPrimario.appendChild(effect)
-
-  setTimeout(() => effect.remove(), 400)
+tabela para cada item
+atualiza item no js
+tabela - valor, nivel maximo, nivel atual, chave estrangeira habilitado
