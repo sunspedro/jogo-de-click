@@ -73,11 +73,6 @@ button, input, textarea, select {
   transition: all 1s ease;
   margin-top: 50px;
 }
-.btn-secundario:hover{
-  background-color: var(--red-100);
-  color: var(--white-100);
-
-}
 .card{
   display: flex;
   flex-direction: column;
@@ -189,16 +184,24 @@ button, input, textarea, select {
   .principal{
     color: var(--white-100);
     background-color: var(--red-200);
-    .btn-principal{
+    
+    .btn-principal {
       color: var(--red-500);
-      border: 1px solid var(--red-500);
+      border: none;
       border-radius: 10px;
-      transition: all 1s ease;
+      transition: background-color .2s ease, box-shadow .2s ease;
+      cursor: pointer;
     }
-    .btn-principal:hover{
-      background-color: var(--red-500);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+    .btn-principal:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      background-color: var(--red-300);
     }
+
+    .btn-principal:active {
+      box-shadow: 0 2px 4px rgba(0,0,0,.15);
+    }
+
     i{
       display: block;
     }
@@ -260,7 +263,7 @@ button, input, textarea, select {
     margin: 10px;
     transition: transform 1s ease ;
     .pontos-title{
-      color: #B5A0A0;
+      color: var(--white-100);
       margin: 15px 0px 35px 0px;
     }
     .valor{

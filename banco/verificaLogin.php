@@ -30,4 +30,8 @@ if ($user) {
 
     header("Location: ../jogo.php");
     exit;
-} 
+} else {
+
+    header("Location: ../login.php?erro=1");
+    exit;
+}

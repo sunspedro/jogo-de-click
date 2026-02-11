@@ -25,6 +25,9 @@
           </div>
           <button type="submit">Entrar</button>
           <a href="conta.php">Cadastrar</a>
+          <?php if (isset($_GET['erro'])): ?>
+              <p style="color:red">Usuário ou senha inválidos</p>
+          <?php endif; ?>
       </form>
       </div>
     </div>

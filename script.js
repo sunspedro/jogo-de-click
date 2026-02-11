@@ -69,6 +69,10 @@ let currentScroll = window.scrollY
 let targetScroll = currentScroll
 let scrolling = false
 
+let lastClickType = 'primary'
+
+let efeitoQuadradosListenersAdded = false
+
 function inertiaScroll() {
   if (!scrolling) return
 
@@ -97,36 +101,45 @@ function desativaBotoes(){
 }
 
 function atualizaPontosPrimario() {
-  ui.pontosPrimario.textContent = game.pontosPrimario
+  if (ui.pontosPrimario) ui.pontosPrimario.textContent = game.pontosPrimario.toLocaleString()
 }
 function atualizaPontosSecundario() {
-  ui.pontosSecundario.textContent = game.pontosSecundario
+  if (ui.pontosSecundario) ui.pontosSecundario.textContent = game.pontosSecundario.toLocaleString()
 }
 
 function abreModalPontos() {
+  if (!ui.overlay) return
   ui.overlay.style.display = "block"
   scrollToId("estiloGeral")
 }
 
-ui.fechaModalPontos.addEventListener("click", () => {
-  ui.overlay.style.display = "none"
-})
+if (ui.fechaModalPontos) {
+  ui.fechaModalPontos.addEventListener("click", () => {
+    ui.overlay.style.display = "none"
+  })
+}
 
 function abreModalNovoBotao() {
+  if (!ui.overlay2) return
   ui.overlay2.style.display = "block"
   scrollToId("estiloGeral")
 }
-ui.fechaModalNovoBotao.addEventListener("click", () => {
-  ui.overlay2.style.display = "none"
-})
+if (ui.fechaModalNovoBotao) {
+  ui.fechaModalNovoBotao.addEventListener("click", () => {
+    ui.overlay2.style.display = "none"
+  })
+}
 
-function abreModalEfeitoCLick() {
+function abreModalEfeitoClick() {
+  if (!ui.overlay3) return
   ui.overlay3.style.display = "block"
   scrollToId("estiloGeral")
 }
-ui.fechaModalEfeitoClick.addEventListener("click", () => {
-  ui.overlay3.style.display = "none"
-})
+if (ui.fechaModalEfeitoClick) {
+  ui.fechaModalEfeitoClick.addEventListener("click", () => {
+    ui.overlay3.style.display = "none"
+  })
+}
 
 function podeComprar(preco) {
   if (preco <= game.pontosPrimario) {
@@ -135,90 +148,101 @@ function podeComprar(preco) {
     return true
   }
   abreModalPontos()
-  scrollToId("estiloGeral")
   return false
 }
 
 atualizaPontosPrimario()
+atualizaPontosSecundario()
 
 function atualizaValorPrimario(){
   game.pontosPrimario += game.valorClick
   atualizaPontosPrimario()
 }
 
-ui.btnClickPrimario.addEventListener("click", () => {
-  if(game.clickMultiploNivelAtual > 0){
-    game.clickMultiploCont++
+if (ui.btnClickPrimario) {
+  ui.btnClickPrimario.addEventListener("click", () => {
+    lastClickType = 'primary'
 
-    if(game.clickMultiploCont > game.clickMultiploAtiva){
-      game.clickMultiploCont = 0
-      game.pontosPrimario += game.valorClick * 10
-      atualizaPontosPrimario()
-    }
-    else{
+    if (game.clickMultiploNivelAtual > 0) {
+      game.clickMultiploCont++
+
+      if (game.clickMultiploCont > game.clickMultiploAtiva) {
+        game.clickMultiploCont = 0
+        game.pontosPrimario += game.valorClick * 10
+        atualizaPontosPrimario()
+      } else {
+        atualizaValorPrimario()
+      }
+    } else {
       atualizaValorPrimario()
     }
 
-  }
-  else{
-    atualizaValorPrimario()
-  }
-  clickCriticoSorteador()
-})
+    clickCriticoSorteador()
+  })
+}
 
-ui.btnClickSecundario.addEventListener("click", () => {
-  game.pontosSecundario += game.valorClickSecundario
-  atualizaPontosSecundario()
-  clickCriticoSorteador()
-})
+if (ui.btnClickSecundario) {
+  ui.btnClickSecundario.addEventListener("click", () => {
+    lastClickType = 'secondary'
+    game.pontosSecundario += game.valorClickSecundario
+    atualizaPontosSecundario()
+    clickCriticoSorteador()
+  })
+}
 
-ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
+if (ui.melhoraValor) {
+  ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
 
-ui.melhoraValor.addEventListener("click", () => {
-  if (podeComprar(game.precoMelhoraValor)) {
-    game.valorClick += 1
-    game.precoMelhoraValor = Math.round(game.precoMelhoraValor * 1.5)
-    ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
-  }
-})
+  ui.melhoraValor.addEventListener("click", () => {
+    if (podeComprar(game.precoMelhoraValor)) {
+      game.valorClick += 1
+      game.precoMelhoraValor = Math.round(game.precoMelhoraValor * 1.5)
+      ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
+    }
+  })
+}
 
-ui.melhoraEstilo.textContent = "Melhorar estilo - " + game.precoMelhoraEstilo
+if (ui.melhoraEstilo) {
+  ui.melhoraEstilo.textContent = "Melhorar estilo - " + game.precoMelhoraEstilo
 
-function clickMelhoraEstilo() {
-  if (podeComprar(game.precoMelhoraEstilo)) {
+  function clickMelhoraEstilo() {
+    if (!podeComprar(game.precoMelhoraEstilo)) return
+
     game.precoMelhoraEstilo = Math.round(game.precoMelhoraEstilo * 1.5)
     ui.melhoraEstilo.textContent = "Melhorar estilo - " + game.precoMelhoraEstilo
 
     game.classeEstilo++
 
-    if (game.classeEstilo <= game.estiloMaximo) {
+    if (game.classeEstilo <= game.estiloMaximo && ui.estiloGeral && ui.overlay) {
       ui.estiloGeral.classList.add("estilo" + game.classeEstilo)
       ui.overlay.classList.add("estilo" + game.classeEstilo)
     }
-    if(game.classeEstilo >= game.estiloMaximo){
+    if (game.classeEstilo >= game.estiloMaximo) {
       ui.melhoraEstilo.textContent = "Estilo máximo alcançado."
       ui.melhoraEstilo.removeEventListener("click", clickMelhoraEstilo)
-      ui.botaoHabilidade.style.display = "block"
+      if (ui.botaoHabilidade) ui.botaoHabilidade.style.display = "block"
     }
   }
+
+  ui.melhoraEstilo.addEventListener("click", clickMelhoraEstilo)
 }
 
-ui.melhoraEstilo.addEventListener("click", clickMelhoraEstilo)
+if (ui.botaoHabilidade) {
+  ui.botaoHabilidade.textContent = "Valor para habilitar arvore de habilidades: " + game.precoHabilidade
 
-ui.botaoHabilidade.textContent = "Valor para habilitar arvore de habilidades: " + game.precoHabilidade
+  function clickHabilidades() {
+    if (!podeComprar(game.precoHabilidade)) return
 
-function clickHabilidades() {
-  if (podeComprar(game.precoHabilidade)) {
     ui.botaoHabilidade.removeEventListener("click", clickHabilidades)
     ui.botaoHabilidade.textContent = "Habilitado"
-    ui.arvoreHabilidades.style.display = "flex"
-    ui.estiloGeral.classList.add("estilo" + "4")
+    if (ui.arvoreHabilidades) ui.arvoreHabilidades.style.display = "flex"
+    if (ui.estiloGeral) ui.estiloGeral.classList.add("estilo4")
     abreModalNovoBotao()
     atualizaPontosSecundario()
   }
-}
 
-ui.botaoHabilidade.addEventListener("click", clickHabilidades)
+  ui.botaoHabilidade.addEventListener("click", clickHabilidades)
+}
 
 function iniciarClickAutomaticoPrimario() {
   if (intervaloClickPrimario) return
@@ -240,21 +264,20 @@ function atualizarVelocidadeClickPrimario() {
   iniciarClickAutomaticoPrimario()
 }
 
-ui.clickAutomaticoLabel.textContent = "Valor: " + game.clickAutomaticoValor
-ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
-ui.clickAutomaticoBotao.addEventListener("click", clickAutomatico)
+if (ui.clickAutomaticoLabel) ui.clickAutomaticoLabel.textContent = "Valor: " + game.clickAutomaticoValor
+if (ui.clickAutomaticoNivel) ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
+if (ui.clickAutomaticoBotao) ui.clickAutomaticoBotao.addEventListener("click", clickAutomatico)
 
 function clickAutomatico() {
-  if (!podeComprar(game.clickCriticoValor)) return
+  if (!podeComprar(game.clickAutomaticoValor)) return
 
   game.clickAutomaticoHabilitado = true
   game.clickAutomaticoNivelAtual++
   game.clickAutomaticoValor *= 2
-  game.clickAutomaticoTempo = Math.max(100,game.clickAutomaticoTempo - game.clickAutomaticoNivelAtual * 10
-  )
+  game.clickAutomaticoTempo = Math.max(100, game.clickAutomaticoTempo - game.clickAutomaticoNivelAtual * 10)
 
-  ui.clickAutomaticoLabel.textContent ="Valor: " + game.clickAutomaticoValor
-  ui.clickAutomaticoNivel.textContent ="Nivel: " + game.clickAutomaticoNivelAtual
+  if (ui.clickAutomaticoLabel) ui.clickAutomaticoLabel.textContent = "Valor: " + game.clickAutomaticoValor
+  if (ui.clickAutomaticoNivel) ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
 
   if (game.clickAutomaticoNivelAtual === 1) {
     iniciarClickAutomaticoPrimario()
@@ -263,75 +286,84 @@ function clickAutomatico() {
   }
 
   if (game.clickAutomaticoNivelAtual >= game.clickAutomaticoNivelMaximo) {
-    ui.clickAutomaticoLabel.textContent = "Nível máximo"
-    ui.clickAutomaticoBotao.removeEventListener("click", clickAutomatico)
+    if (ui.clickAutomaticoLabel) ui.clickAutomaticoLabel.textContent = "Nível máximo"
+    if (ui.clickAutomaticoBotao) ui.clickAutomaticoBotao.removeEventListener("click", clickAutomatico)
   }
 }
 
-ui.clickCriticoLabel.textContent = "Valor: " + game.clickCriticoValor
-ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
-ui.clickCriticoBotao.addEventListener("click", clickCritico)
+if (ui.clickCriticoLabel) ui.clickCriticoLabel.textContent = "Valor: " + game.clickCriticoValor
+if (ui.clickCriticoNivel) ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
+if (ui.clickCriticoBotao) ui.clickCriticoBotao.addEventListener("click", clickCritico)
 
 function clickCritico(){
-  if(podeComprar(game.clickCriticoValor)) return
+  if (!podeComprar(game.clickCriticoValor)) return
 
   game.clickCriticoNivelAtual++
   game.clickCriticoValor *= 2
-  game.clickCriticoChance *= 1.5
+  game.clickCriticoChance = Math.min(1, game.clickCriticoChance * 1.5)
 
-  if(game.clickCriticoNivelAtual >= game.clickCriticoNivelMaximo){
-    ui.clickCriticoLabel.textContent = "Nivel máximo"
-    ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
+  if (game.clickCriticoNivelAtual >= game.clickCriticoNivelMaximo) {
+    if (ui.clickCriticoLabel) ui.clickCriticoLabel.textContent = "Nivel máximo"
+    if (ui.clickCriticoNivel) ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
+    if (ui.clickCriticoBotao) ui.clickCriticoBotao.removeEventListener("click", clickCritico)
+  } else {
+    if (ui.clickCriticoLabel) ui.clickCriticoLabel.textContent = "Valor: " + game.clickCriticoValor
+    if (ui.clickCriticoNivel) ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
   }
 }
 
 function clickCriticoSorteador(){
-  if(game.clickCriticoChance > Math.random()){
-    console.log("deu certo")
+  if (Math.random() >= game.clickCriticoChance) return
+
+  // efeito: dobra o ganho do clique (adicionei um segundo ganho)
+  if (lastClickType === 'primary') {
+    game.pontosPrimario += game.valorClick
+    atualizaPontosPrimario()
+    // aqui você pode adicionar feedback visual (flash, animação, toast)
+  } else {
+    game.pontosSecundario += game.valorClickSecundario
+    atualizaPontosSecundario()
   }
 }
 
-ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
-ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
-ui.clickMultiploBotao.addEventListener("click", clickMultiplo)
+if (ui.clickMultiploLabel) ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
+if (ui.clickMultiploNivel) ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
+if (ui.clickMultiploBotao) ui.clickMultiploBotao.addEventListener("click", clickMultiplo)
 
 function clickMultiplo(){
-  if(podeComprar(game.clickMultiploValor)){
-    game.clickMultiploNivelAtual++
-    game.clickMultiploValor*=2
-    ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
-    ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
-  }
+  if (!podeComprar(game.clickMultiploValor)) return
+
+  game.clickMultiploNivelAtual++
+  game.clickMultiploValor *= 2
+  if (ui.clickMultiploLabel) ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
+  if (ui.clickMultiploNivel) ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
 }
 
-ui.efeitoClickLabel.textContent = "Valor: " + game.efeitoClickValor
-ui.efeitoClickBotao.textContent = "Comprar"
+if (ui.efeitoClickLabel) ui.efeitoClickLabel.textContent = "Valor: " + game.efeitoClickValor
+if (ui.efeitoClickBotao) ui.efeitoClickBotao.textContent = "Comprar"
+if (ui.efeitoClickBotao) ui.efeitoClickBotao.addEventListener("click", efeitoClick)
 
-function efeitoCLick(){
-  if(podeComprar(game.efeitoClickValor)){
-    ui.efeitoClickBotao.textContent = "Abrir efeitos"
+function efeitoClick(){
+  if (podeComprar(game.efeitoClickValor)) {
+    if (ui.efeitoClickBotao) ui.efeitoClickBotao.textContent = "Abrir efeitos"
     game.efeitoClickHabilitado = true
   }
-  if(game.efeitoClickHabilitado == true){
-    abreModalEfeitoCLick()
+  if (game.efeitoClickHabilitado == true) {
+    abreModalEfeitoClick()
   }
 }
 
-ui.efeitoClickBotao.addEventListener("click", efeitoCLick)
-
-
-//efeitos de click
-ui.efeitoBolinhasButton.textContent = "Comprar"
+if (ui.efeitoBolinhasButton) ui.efeitoBolinhasButton.textContent = "Comprar"
 
 function efeitoBolinhas(){
-  if(podeComprar(game.efeitoBolinhasValor)){
-    desativaBotoes()
-    game.efeitoBolinhasAtivado = true
-    ui.efeitoBolinhasButton.textContent = "Habilitado"
-  }
+  if (!podeComprar(game.efeitoBolinhasValor)) return
+
+  desativaBotoes()
+  game.efeitoBolinhasAtivado = true
+  if (ui.efeitoBolinhasButton) ui.efeitoBolinhasButton.textContent = "Habilitado"
 }
 
-ui.efeitoBolinhasButton.addEventListener("click", efeitoBolinhas)
+if (ui.efeitoBolinhasButton) ui.efeitoBolinhasButton.addEventListener("click", efeitoBolinhas)
 
 document.addEventListener("click", (e) => {
   if (!game.efeitoBolinhasAtivado) return;
@@ -347,6 +379,10 @@ document.addEventListener("click", (e) => {
   for (let i = 0; i < quantidade; i++) {
     const b = document.createElement("div");
     b.className = "bolinha";
+    b.style.position = 'fixed';
+    b.style.left = '0px';
+    b.style.top = '0px';
+    b.style.pointerEvents = 'none';
     document.body.appendChild(b);
 
     bolinhas.push({
@@ -378,28 +414,50 @@ document.addEventListener("click", (e) => {
   requestAnimationFrame(animar);
 });
 
-ui.efeitoQuadradoButton.textContent = "Comprar"
+if (ui.efeitoQuadradoButton) ui.efeitoQuadradoButton.textContent = "Comprar"
+if (ui.efeitoQuadradoButton) ui.efeitoQuadradoButton.addEventListener("click", efeitoQuadrados)
 
 function efeitoQuadrados(){
-  if(podeComprar(game.efeitoQuadradosValor)){
-    desativaBotoes()
-    game.efeitoQuadradosAtivado = true
-    ui.efeitoQuadradoButton.textContent = "Habilitado"
+  if (!podeComprar(game.efeitoQuadradosValor)) return
+
+  desativaBotoes()
+  game.efeitoQuadradosAtivado = true
+  if (ui.efeitoQuadradoButton) ui.efeitoQuadradoButton.textContent = "Habilitado"
+
+  if (efeitoQuadradosListenersAdded) return
+  efeitoQuadradosListenersAdded = true
+
+  const cursor = document.querySelector('.cursor')
+  if (!cursor) return
+
+  function onMove(e){
+    cursor.style.left = e.clientX - 12 + 'px';
+    cursor.style.top  = e.clientY - 12 + 'px';
   }
-  if(game.efeitoQuadradosAtivado == true){
-    const cursor = document.querySelector('.cursor');
-
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX - 12 + 'px';
-      cursor.style.top  = e.clientY - 12 + 'px';
-    });
-
-    document.addEventListener('click', () => {
-      cursor.classList.add('spin');
-
-      setTimeout(() => {
-        cursor.classList.remove('spin');
-      }, 400);
-    });
+  function onClick(){
+    cursor.classList.add('spin');
+    setTimeout(() => cursor.classList.remove('spin'), 400);
   }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('click', onClick);
 }
+
+function atualizaLabels(){
+  if (ui.melhoraValor) ui.melhoraValor.textContent = "Melhora valor do click - " + game.precoMelhoraValor
+  if (ui.melhoraEstilo) ui.melhoraEstilo.textContent = game.classeEstilo >= game.estiloMaximo ? "Estilo máximo alcançado." : "Melhorar estilo - " + game.precoMelhoraEstilo
+  if (ui.clickAutomaticoLabel) ui.clickAutomaticoLabel.textContent = "Valor: " + game.clickAutomaticoValor
+  if (ui.clickAutomaticoNivel) ui.clickAutomaticoNivel.textContent = "Nivel: " + game.clickAutomaticoNivelAtual
+  if (ui.clickCriticoLabel) ui.clickCriticoLabel.textContent = game.clickCriticoNivelAtual >= game.clickCriticoNivelMaximo ? "Nivel máximo" : "Valor: " + game.clickCriticoValor
+  if (ui.clickCriticoNivel) ui.clickCriticoNivel.textContent = "Nivel: " + game.clickCriticoNivelAtual
+  if (ui.clickMultiploLabel) ui.clickMultiploLabel.textContent = "Valor: " + game.clickMultiploValor
+  if (ui.clickMultiploNivel) ui.clickMultiploNivel.textContent = "Nivel: " + game.clickMultiploNivelAtual
+  if (ui.efeitoClickLabel) ui.efeitoClickLabel.textContent = "Valor: " + game.efeitoClickValor
+  if (ui.efeitoBolinhasLabel) ui.efeitoBolinhasLabel.textContent = "Valor: " + game.efeitoBolinhasValor
+  if (ui.efeitoQuadradoLabel) ui.efeitoQuadradoLabel.textContent = "Valor: " + game.efeitoQuadradosValor
+  if (ui.botaoHabilidade) ui.botaoHabilidade.textContent = "Valor para habilitar arvore de habilidades: " + game.precoHabilidade
+}
+
+atualizaLabels()
+atualizaPontosPrimario()
+atualizaPontosSecundario()
